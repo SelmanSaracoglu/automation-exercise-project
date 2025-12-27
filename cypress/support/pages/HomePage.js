@@ -29,13 +29,13 @@ class HomePage {
    * Wir müssen die vorhandene ID trotz des Fehlers nutzen.
    */
   get sidebarCategory() { return cy.get("#accordian"); }
+  get sidebarTitle() { return cy.get(".left-sidebar h2"); }
   get sidebarBrands() { return cy.get(".brands_products"); }
 
-  /**
-   * Produkt-Container (Body)
-   * Strategie: Klasse basierend auf dem Komponentennamen.
-   */
+
+  get featuredItemsTitle() { return cy.get(".features_items .title"); }
   get featuredItemsContainer() { return cy.get(".features_items"); }
+
   
   /**
    * Einzelne Produktkarten

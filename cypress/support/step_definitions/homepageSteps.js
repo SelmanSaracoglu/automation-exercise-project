@@ -1,5 +1,5 @@
 import { Given, When, Then } from "@badeball/cypress-cucumber-preprocessor";
-import { homePage } from "../../../pages/HomePage";
+import { homePage } from "../pages/HomePage";
 
 // ==================================================
 // BACKGROUND & SMOKE
@@ -45,7 +45,7 @@ Then("der Titel der Seite sollte {string} sein", (pageTitle) => {
 // ==================================================
 
 Then("sollte die Kategorie-Leiste {string} sichtbar sein", (headerText) => {
-  homePage.sidebarCategory.should("be.visible").and("contain", headerText);
+  homePage.sidebarTitle.contains(headerText).should("be.visible");
 });
 
 Then("die Kategorien {string}, {string} und {string} sollten verfügbar sein", (cat1, cat2, cat3) => {
@@ -64,7 +64,7 @@ Then("der Bereich {string} \\(Marken) sollte sichtbar sein", (brandsText) => {
 // ==================================================
 
 Then("sollte der Bereich {string} sichtbar sein", (sectionTitle) => {
-  homePage.featuredItemsContainer.should("be.visible").and("contain", sectionTitle);
+  homePage.featuredItemsTitle.should("be.visible").and("contain.text", sectionTitle);
 });
 
 Then("alle angezeigten Produkte sollten ein Bild haben \\(kein Broken Image)", () => {
@@ -97,8 +97,7 @@ Then("sollte der Footer den Text {string} enthalten", (text) => {
 });
 
 Then("sollte das Copyright im Footer sichtbar sein", () => {
-  homePage.footer.find(".pull-right").should("contain", "Copyright");
-});
+homePage.footer.should("contain", "Copyright");});
 
 When("der Besucher nach unten scrollt", () => {
   homePage.scrollToBottom();
