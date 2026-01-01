@@ -35,7 +35,7 @@ Damit dieser Task als "Done" gilt, müssen folgende Kriterien erfüllt sein:
 - Eingabe von falscher Email oder falschem Passwort.
 - **Ergebnis:**
   - Der Benutzer bleibt auf der Login-Seite.
-  - Eine rote Fehlermeldung erscheint: _"Email Address or Password is incorrect"_.
+  - Eine rote Fehlermeldung erscheint: _"Your email or password is incorrect!"_.
 
 ### AC-09: Logout-Prozess (REQ-16)
 
