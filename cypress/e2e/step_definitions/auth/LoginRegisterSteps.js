@@ -11,7 +11,7 @@ Given("der Benutzer ist auf der Startseite", () => {
 });
 
 When("er auf den Link {string} im Menü klickt", (linkText) => {
-  // Wir nutzen die Methode aus der HomePage wieder. (Reusability)
+  // Wir nutzen die Methode aus der HomePage wieder (Reusability).
   homePage.clickMenuLink(linkText);
 });
 
@@ -27,7 +27,6 @@ Then("sollte die Login-Seite sichtbar sein", () => {
 // ==================================================
 
 When("der Benutzer gibt die Login-Email {string} und das Passwort {string} ein", (email, password) => {
-  // Wir rufen die Elemente aus dem Page Object auf.
   loginPage.loginEmailInput.type(email);
   loginPage.loginPasswordInput.type(password);
 });
@@ -42,40 +41,53 @@ When("klickt auf den Button {string}", (btnText) => {
 });
 
 Then("sollte der Header den Text {string} enthalten", (headerText) => {
-  // Wir suchen den Text "Logged in as..." im Header.
-  // Hinweis: Dieses Element sollte eigentlich in der HomePage definiert sein.
   cy.get("header").contains(headerText).should("be.visible");
 });
 
 Then("der Button {string} sollte sichtbar sein", (btnText) => {
-  // Ist der "Delete Account" Button sichtbar?
   cy.contains("a", btnText).should("be.visible");
 });
 
 Then("sollte die Fehlermeldung {string} sichtbar sein", (errorMsg) => {
+  // Wir suchen die Fehlermeldung im gesamten Login-Formular.
   loginPage.loginErrorMessage.should("contain", errorMsg);
 });
 
 // ==================================================
-// REGISTER SZENARIEN (DYNAMIC DATA)
+// REGISTER SZENARIEN (DYNAMIC & STATIC DATA)
 // ==================================================
 
+// Case: Random Email (AC-10)
 When("der Benutzer gibt einen Namen und eine neue Email-Adresse ein", () => {
   const name = "AutoTester";
-
-  // Wir generieren eine einzigartige Email für jeden Test mit "Date.now()" (Zeitstempel).
-  // Dadurch vermeiden wir den Fehler "Email already exists".
-  // Beispiel: autotest_17357483920@test.com
+  // Dynamische Email mit Zeitstempel, um Duplikate zu vermeiden.
   const randomEmail = `autotest_${Date.now()}@test.com`;
 
-  // Wir loggen die Email, um sie im Cypress Test Runner zu sehen.
   cy.log(`Generierte Email: ${randomEmail}`);
 
   loginPage.signupNameInput.type(name);
   loginPage.signupEmailInput.type(randomEmail);
 });
 
+// Case: Statische Email für AC-11 (Duplicate Email Test)
+When("der Benutzer gibt den Namen {string} und die Email {string} ein", (name, email) => {
+  cy.log(`Test mit existierender Email: ${email}`);
+  loginPage.signupNameInput.type(name);
+  loginPage.signupEmailInput.type(email);
+});
+
 Then("sollte die Seite {string} sichtbar sein", (pageText) => {
-  // Wir prüfen den Text "Enter Account Information" nach dem Klick auf Signup.
   cy.contains(pageText).should("be.visible");
 });
+
+// AC-11: Prüfung der Fehlermeldung bei Registrierung
+Then("sollte die Registrierungs-Fehlermeldung {string} sichtbar sein", (errorMsg) => {
+  loginPage.signupErrorMessage.should("contain", errorMsg);
+});
+
+// AC-09: Logout-Prüfung
+Then("der Header sollte den Link {string} enthalten", (linkText) => {
+  // Nach dem Logout muss "Signup / Login" wieder sichtbar sein.
+  cy.get("header").contains(linkText).should("be.visible");
+});
+

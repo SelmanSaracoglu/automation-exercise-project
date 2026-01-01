@@ -27,7 +27,7 @@ class LoginPage {
 
   // Fehlermeldung im Signup-Bereich (AC-11)
   // Hinweis: Erscheint, wenn die Email bereits existiert.
-  get signupErrorMessage() { return cy.get('.signup-form form p'); }
+  get signupErrorMessage() { return cy.get('.signup-form'); }
 
   // ==================================================
   // AKTIONEN & METHODEN (METHODS)
