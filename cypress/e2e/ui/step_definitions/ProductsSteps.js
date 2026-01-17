@@ -3,6 +3,8 @@ import { productsPage } from "../../../pages/ProductsPage";
 import { homePage } from "../../../pages/HomePage";
 import { cartPage } from "../../../pages/CartPage";
 import { loginPage } from "../../../pages/LoginPage";
+import { checkoutPage } from "../../../pages/CheckoutPage";
+import { paymentPage } from "../../../pages/PaymentPage";
 
 // --- Navigation Steps ---
 
@@ -13,6 +15,9 @@ Given("ich bin auf der {string} Seite", (pageName) => {
     if (pageName === "All Products") {
         homePage.visit();
         productsPage.navigateToProducts();
+    }
+    else if (pageName === "Warenkorb") {
+        cy.visit('/view_cart');
     }
 });
 
@@ -35,20 +40,30 @@ When("ich auf {string} beim ersten Artikel klicke", (btnText) => {
 
 Then("sollte ich auf die {string} Seite weitergeleitet werden", (pageName) => {
     switch (pageName) {
-        case "All Products":
-            productsPage.verifyOnPage();
+        case "ALL PRODUCTS":
+            productsPage.verifyOnPage(); 
             break;
             
         case "Warenkorb": 
-            cartPage.verifyOnPage
+            cartPage.verifyOnPage();
             break;
 
         case "Login":
             loginPage.verifyOnPage();
             break;
 
+        // 👇 ADD THESE NEW CASES
+        case "Checkout":
+            checkoutPage.verifyOnPage();
+            break;
+
+        case "Payment":
+            paymentPage.verifyOnPage();
+            break;
+        // 👆 END NEW CASES
+
         default:
-            throw new Error(`Not Defined: ${pageName}`);
+            throw new Error(`Page definition not found: ${pageName}`);
     }
 });
 

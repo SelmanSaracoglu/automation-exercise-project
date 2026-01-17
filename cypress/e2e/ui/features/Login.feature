@@ -7,7 +7,7 @@ Feature: Benutzeranmeldung (Login)
   @AC_06 @API_Check
   Scenario: Erfolgreicher Login mit API Überprüfung
     Given ich bin auf der Login-Seite
-    When ich mich mit "test_selman@test.com" und "test1234" einlogge und die API überwache
+    When ich mich mit ""testuser_123@qa.com" und "test1234!" einlogge und die API überwache
     Then sollte der Server mit Status 200 antworten
     And ich sollte als "selman" eingeloggt sein
 
