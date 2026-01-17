@@ -1,6 +1,8 @@
 import { Given, When, Then } from "@badeball/cypress-cucumber-preprocessor";
 import { productsPage } from "../../../pages/ProductsPage";
 import { homePage } from "../../../pages/HomePage";
+import { cartPage } from "../../../pages/CartPage";
+import { loginPage } from "../../../pages/LoginPage";
 
 // --- Navigation Steps ---
 
@@ -8,7 +10,7 @@ import { homePage } from "../../../pages/HomePage";
 // It is already defined in HomeSteps.js and reused here. DRY (Don't Repeat Yourself)!
 
 Given("ich bin auf der {string} Seite", (pageName) => {
-    if (pageName === "ALL PRODUCTS") {
+    if (pageName === "All Products") {
         homePage.visit();
         productsPage.navigateToProducts();
     }
@@ -31,14 +33,27 @@ When("ich auf {string} beim ersten Artikel klicke", (btnText) => {
 
 // --- Validation Steps ---
 
-Then("sollte ich auf die {string} Seite weitergeleitet werden", (expectedTitle) => {
-    productsPage.allProductsTitle.should('contain.text', expectedTitle);
-    cy.url().should('include', '/products');
+Then("sollte ich auf die {string} Seite weitergeleitet werden", (pageName) => {
+    switch (pageName) {
+        case "All Products":
+            productsPage.verifyOnPage();
+            break;
+            
+        case "Warenkorb": 
+            cartPage.verifyOnPage
+            break;
+
+        case "Login":
+            loginPage.verifyOnPage();
+            break;
+
+        default:
+            throw new Error(`Not Defined: ${pageName}`);
+    }
 });
 
 Then("die Produktliste sollte sichtbar sein und Artikel enthalten", () => {
     productsPage.productList.should('be.visible');
-    // En az 1 ürün gelmiş olmalı (Empty State kontrolü)
     productsPage.productList.should('have.length.greaterThan', 0);
 });
 

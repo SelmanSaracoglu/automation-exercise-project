@@ -17,9 +17,22 @@ class ProductsPage {
     get productPrice() { return cy.contains('span', 'Rs.'); }
     get availability() { return cy.contains('b', 'Availability'); }
 
+    // Card
+    get addToCartButtons() { return cy.get('.product-overlay .add-to-cart'); } // Hover olunca çıkan butonlar
+    get modalContinueBtn() { return cy.contains('button', 'Continue Shopping'); }
+    get modalViewCartBtn() { return cy.contains('u', 'View Cart'); }
+    get addedModal() { return cy.get('.modal-content'); }
+
+
+
     // ==========================================
     // 2. METHODS
     // ==========================================
+
+    verifyOnPage() {
+        cy.url().should('include', '/products');
+        this.allProductsTitle.should('have.text', 'All Products');
+    }
 
     navigateToProducts() {
         this.productsLink.click();
@@ -28,6 +41,20 @@ class ProductsPage {
     viewFirstProduct() {
         // Listede gördüğün ilk ürünün detay butonuna tıkla
         this.viewProductBtns.first().click();
+    }
+
+    
+    addProductToCart(index) {
+
+        this.addToCartButtons.eq(index).click({ force: true });
+    }
+
+    clickContinueShopping() {
+        this.modalContinueBtn.should('be.visible').click();
+    }
+
+    clickViewCartFromModal() {
+        this.modalViewCartBtn.should('be.visible').click();
     }
 }
 

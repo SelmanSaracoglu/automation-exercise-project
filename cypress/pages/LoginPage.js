@@ -23,6 +23,11 @@ class LoginPage {
         this.passwordInput.type(password);
         this.loginButton.click();
     }
+
+    verifyOnPage() {
+        cy.url().should('include', '/login');
+        cy.contains('h2', 'Login to your account').should('be.visible'); 
+    }
 }
 
 export const loginPage = new LoginPage();
