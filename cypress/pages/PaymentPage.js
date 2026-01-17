@@ -8,6 +8,9 @@ class PaymentPage {
     get payButton() { return cy.get('[data-qa="pay-button"]'); }
     get successMessage() { return cy.get('[data-qa="order-placed"]'); }
 
+    get downloadInvoiceBtn() { return cy.contains('a', 'Download Invoice'); }
+    get continueBtn() { return cy.get('[data-qa="continue-button"]'); }
+
     // METHODS
     verifyOnPage() {
         cy.url().should('include', '/payment');
@@ -24,6 +27,14 @@ class PaymentPage {
 
     submitPayment() {
         this.payButton.click();
+    }
+
+    clickDownloadInvoice() {
+        this.downloadInvoiceBtn.should('be.visible').click();
+    }
+
+    clickContinue() {
+        this.continueBtn.click();
     }
 }
 export const paymentPage = new PaymentPage();

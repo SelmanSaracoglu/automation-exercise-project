@@ -8,6 +8,10 @@ class LoginPage {
     get errorMessage() { return cy.get('.login-form form p'); }
     get loggedInAs() { return cy.contains('Logged in as'); }
 
+    get signupNameInput() { return cy.get('[data-qa="signup-name"]'); }
+    get signupEmailInput() { return cy.get('[data-qa="signup-email"]'); }
+    get signupBtn() { return cy.get('[data-qa="signup-button"]'); }
+
     // 2. METHODS
     visit() {
         cy.visit('/login');
@@ -22,6 +26,12 @@ class LoginPage {
         this.emailInput.type(email);
         this.passwordInput.type(password);
         this.loginButton.click();
+    }
+
+    signup(name, email) {
+        this.signupNameInput.type(name);
+        this.signupEmailInput.type(email);
+        this.signupBtn.click();
     }
 
     verifyOnPage() {
